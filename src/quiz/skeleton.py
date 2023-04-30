@@ -23,8 +23,11 @@ References:
 import argparse
 import logging
 import sys
+import pandas as pd
 
 from quiz import __version__
+from quiz.question import Question
+from quiz.sheet import Sheet
 
 __author__ = "Akshat R. Shrivastava"
 __copyright__ = "Akshat R. Shrivastava"
@@ -38,6 +41,14 @@ _logger = logging.getLogger(__name__)
 # Python scripts/interactive interpreter, e.g. via
 # `from quiz.skeleton import fib`,
 # when using this Python module as a library.
+
+def quiz(n):
+    q = Question("New York", "Albany", ["z", "y", "x"])
+    data = pd.read_csv("./data/capitals.csv")
+    for i in range(n):
+        qset = Sheet(i,data)
+        qset.generate_quiz()
+
 
 
 def fib(n):
@@ -125,6 +136,7 @@ def main(args):
     _logger.debug("Starting crazy calculations...")
     print(f"The {args.n}-th Fibonacci number is {fib(args.n)}")
     _logger.info("Script ends here")
+    quiz(args.n)
 
 
 def run():
